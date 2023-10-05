@@ -1,0 +1,63 @@
+.calcu {
+  width: 500px;
+  height: 700px;
+  background-color: #212A3E;
+  margin-left: 20px;
+  border-radius: 5px;
+  }
+
+.la {
+    color: #9BA4B5;
+    margin-left: 20px;
+    }
+
+.ti {
+    background-color: #394867;
+    margin-bottom: 10px;
+    color: #F1F6F9;
+    border-radius: 5px;
+    }
+
+.inp {
+    margin-left: 50px;
+    }
+
+h2{
+    margin-left: 200px;
+    margin-top: 10px;
+    }
+
+#envi {
+    background-color: #9BA4B5;
+    width: 200px;
+    height: 40px;
+    margin-left: 200px;
+    margin-top: 20px;
+
+}
+
+#sum {
+    margin-left: 10px;
+}
+
+#op {
+    border-color: #F1F6F9;
+    border-radius: 10px;
+    background-color: #9BA4B5;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 10px;
+}
+
+.resultado{
+    color: #F1F6F9;
+    margin-left: 50px;
+    font-size: 35px;
+}
+
+.resultado p{
+    color: #F1F6F9;
+    margin-left: 50px;
+    font-size: 120px;
+    margin-top: 30px;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App_Calculadora</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="calcu">
+        <div class="ti">
+            <h2>Calculadora</h2><hr>
+        </div>
+        <form method="POST" action="{% url 'calculate' %}">
+            {% csrf_token %}
+
+            <label class="la">Numero 1</label><br><br>
+            <input class="inp"  type="text" name="num1" placeholder="Ingrese el primer número" required><br><br>
+            <label class="la">Numero 2</label><br><br>
+            <input class="inp" type="text" name="num2" placeholder="Ingrese el segundo número" required><br><br>
+            
+            <div id="op">
+            <label id="sum" for="suma">(+) Sumar</label>
+            <input type="radio" name="operador" id="suma" value="suma">
+            
+            <label for="resta">(-) Restar</label>
+            <input type="radio" name="operador" id="resta" value="resta">
+            
+            <label for="multiplicacion">(*) Multiplicar</label>
+            <input type="radio" name="operador" id="multiplicacion" value="multiplicacion">
+            
+            <label for="division">(/) Dividir</label>
+            <input type="radio" name="operador" id="division" value="division"><br><br>
+
+            </div>
+
+            <button id="envi" type="submit">Calcular</button><br><br><br>
+
+        </form>
+
+        {% if resultado is not None %}
+    <div class="resultado">
+        Resultado: <p>{{ resultado }}</p>
+    </div>
+    {% endif %}
+
+    {% if mensaje_error %}
+    <div class="error">
+        {{ mensaje_error }}
+    </div>
+    {% endif %}
+    </div>
+</body>
+</html>
+
+
+
+
+
