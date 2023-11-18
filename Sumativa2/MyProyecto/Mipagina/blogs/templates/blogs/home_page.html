@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog</title>
+    <script src="{% static 'scripts/jquery-3.7.1.min.js' %}"></script>
+    
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div class="page-content flex-grow-1">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <!-- Icono de usuario en el lado izquierdo -->
+                <span class="navbar-text">
+                    <img src="{% static 'bootstrap/iconos/person-circle.svg' %}" alt="User Icon" class="me-2" width="30" height="30">Usuario
+                </span>
+        
+                <!-- Botones en el lado derecho -->
+                <div class="navbar-nav ms-auto">
+                    <button type="button" class="btn btn-primary me-2" id="adminBtn">Administrador</button>
+                    <button type="button" class="btn btn-secondary btn-light-mode" id="modoBlackBtn">Modo Black</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-5">
+            <main class="row">
+                <!-- Article -->
+                <article class="col-md-8">
+                    <div class="border p-3 rounded">
+                        <h2 class="fst-italic"><span style="color: brown;">Mi Blog Personal</span></h2>
+                    </div><br>
+
+                    <div class="border p-3 rounded">
+                        <div class="col-md-12 border p-3 rounded">
+                            
+                            {% if post_list %}
+                                {% for post in post_list %}
+                                    
+                                    <div id="{{ post.id }}" class="custom-bg-color p-4 rounded mb-4" style="display: none;">
+                                        <article class="blog-post">
+                                            <a href="{% url 'home_page' %}">Home</a> / {{ post.title }} <br><hr>
+                                            <h2 class="blog-post-title mb-1">
+                                                {{ post.title }}
+                                            </h2>
+                                            <hr>
+                                            <p>
+                                                {{ post.content }}
+                                            </p>
+                                            <hr>
+                                            <p class="blog-post-meta">Fecha de Publicacion: {{ post.date_created.date }} - Autor: {{ post.author }}</p>
+                                            <p>Categoria: <span style="color: brown;">{{ post.overview }}</span></p>
+                                            <p>Etiqueta: <span style="color: brown;"> #{{ post.slug }}</span></p>
+                                        </article>
+                                        
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>No hay posts disponibles.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+
+                </article>
+
+        
+                <!-- Aside -->
+                <aside class="col-md-4">
+                    <div class="card" id="ca">
+                        <div class="card-body">
+                            <h4 class="fst-italic"><span style="color: brown;">Lista de Publicaciones</span> <span style="color: brown;">({{ post_list|length }}) </span></h4>
+                            <ul>
+                                {% if post_list|length == 0 %}
+                                    <p>No hay ninguna publicación para mostrar.</p>
+                                {% else %}
+                                    {% for post in post_list %}
+                                        <li>
+                                            <a href="#" class="blog-link" data-target="{{ post.id }}">{{ post.title }}</a>
+                                        </li>
+                                        
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+
+                            <h4 class="fst-italic"><span style="color: brown;">Categorias</span></h4>
+                            <ul>
+                                {% for category in categories  %}
+                                    <li>
+                                        <a href="#" class="" data-target="{{ category.id }}">{{ category.title }}</a>
+                                    </li>
+                                {% endfor %}
+                                        
+                            </ul>
+
+                            <h4 class="fst-italic"><span style="color: brown;">Etiquetas</span></h4>
+                            
+                            <ul>
+                                {% for post in post_list %}
+                                    <li>
+                                        <a href="#">#{{ post.slug }}</a>
+                                    </li>
+                                {% endfor %}
+                                        
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </aside>
+            </main>
+
+
+        </div>
+    
+        
+    </div>
+    
+    <footer class="footer py-3 bg-light text-center">
+        <div class="container">
+            <p class="mb-0">© 2023 - Todos los derechos reservados | Autor: Gerardo Ferreira</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('adminBtn').addEventListener('click', function() {
+            window.location.href = "{% url 'admin:index' %}";
+        });
+        </script>
+
+    <script>
+        $(document).ready(function() {
+            // Mostrar el primer div al cargar la página
+            var primerPostId = '{{ post_list.last.id }}';
+            $('#' + primerPostId).show();
+
+            // Manejar clic en enlaces del blog
+            $('.blog-link').click(function(e) {
+                e.preventDefault();
+
+                // Ocultar todos los divs con clase 'custom-bg-color'
+                $('.custom-bg-color').hide();
+
+                // Mostrar el div correspondiente al enlace clicado
+                var target = $(this).data('target');
+                $('#' + target).show();
+            });
+        });
+    </script>    
+
+
+
+    <script>
+        $(document).ready(function() {
+        
+            // Manejar el clic en los enlaces
+            $('a.blog-link').on('click', function(e) {
+                e.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+                var targetId = $(this).data('target'); // Obtener el ID del objetivo desde el atributo data-target
+        
+                // Ocultar todos los elementos con la clase .custom-bg-color
+                $('.custom-bg-color').hide();
+        
+                // Mostrar el elemento específico según el ID del enlace
+                $('#' + targetId).show();
+            });
+        });
+        </script>
+    
+
+    <script src="{% static 'scripts/blackmode.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
+
+    
+    
+    
+</body>
+</html>
+
+
